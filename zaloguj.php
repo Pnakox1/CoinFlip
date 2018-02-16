@@ -18,7 +18,9 @@
         $ile_userow= $rezultat->num_rows;
             if($ile_userow>0)
             {
+                $_SESSION['zalogowany'] = true;
               $wiersz = $rezultat->fetch_assoc();
+                $_SESSION['id'] = $wiersz['id'];
                 $_SESSION['login'] = $wiersz['login'];           
                 $_SESSION['value'] = $wiersz['value']; 
                 unset($_SESSION['blad']);
