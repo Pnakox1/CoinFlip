@@ -10,7 +10,7 @@
 </head>
 <body>
     <?php 
-        echo "<p>Witaj ".$_SESSION['login']."!";
+        echo "<p>Witaj ".$_SESSION['login'].'![<a href="logout.php">Wyloguj się !</a>]</p>';
         echo "<p>Twój stan konta wynosi  ".$_SESSION['value']." smoczych monet";
     ?>
 </body>
