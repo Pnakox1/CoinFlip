@@ -1,6 +1,6 @@
 <?php 
 session_start();
-   if ((isset($_SESSION['zalogowany'])) && ($_SESSION['zalogowany']==true))
+   if ((isset($_SESSION['zalogowany']))) && ($_SESSION['zalogowany']==true))
 	{
 		header('Location: gra.php');
 		exit();
@@ -15,12 +15,17 @@ session_start();
 </head>
 <body>
     
-    Bogaci będa biednymi - Przemek 2k18
+Bogaci będa biednymi - Przemek 2k18<br /> <br />
+    
+
     
     <form action="zaloguj.php" method="post" >
     Login <br /> <input type="text" name="login" /> <br/>
     Haslo <br /> <input type="password" name="haslo" /> <br/> <br/>
     <input type="submit" value="Zaloguj się" />
+    <br /> <br />
+            <a href="rejestracja.php">Nie masz jeszcze konta?</a>
+    <br /> <br />
     
     </form>
     <?php 

@@ -18,18 +18,19 @@
         $login=$_POST['login'];
         $haslo=$_POST['haslo'];
         
-        $login = htmlentities($login, ENT_QUOTES,"UTF-8");
-        $haslo = htmlentities($haslo, ENT_QUOTES,"UTF-8");
 
-    if ($rezultat = @$polaczenie->query(sprintf("SELECT * FROM `Users` WHERE `login`='%s' AND `password`='%s'",
-        mysqli_real_escape_string($polaczenie,$login),
-        mysqli_real_escape_string($polaczenie,$haslo))))
+
+    if ($rezultat = @$polaczenie->query(sprintf("SELECT * FROM `Users` WHERE `login`='%s'",
+        mysqli_real_escape_string($polaczenie,$login))));
+       
     {
         $ile_userow= $rezultat->num_rows;
             if($ile_userow>0)
             {
-                $_SESSION['zalogowany'] = true;
-              $wiersz = $rezultat->fetch_assoc();
+                $wiersz = $rezultat->fetch_assoc();
+                if(password_verify($haslo,$wiersz['password']))
+                {
+                $_SESSION['zalogowany'] = true;             
                 $_SESSION['id'] = $wiersz['id'];
                 $_SESSION['login'] = $wiersz['login'];           
                 $_SESSION['value'] = $wiersz['value']; 
@@ -39,6 +40,12 @@
                     
                 $rezultat->close();
                 header('Location:gra.php');
+                }
+                    else
+                    {
+                   $_SESSION['blad']='<span style="color:red">Nieprawidlowy login lub haslo! </span>';
+                   header('Location: index.php');
+                    }
             }
             else
             {
