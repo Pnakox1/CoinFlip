@@ -15,64 +15,174 @@ else{
     }
     else
     {
-        
-            if((isset($_POST['ct'])) || (isset($_POST['tt'])))
+        if($_POST['obstawione']>0)
+            
+        {
+            if($_POST['obstawione']<$_SESSION['value'])
             {
-                $wylosowana=rand(1,2);
-                if(isset($_POST['ct']))
-                {
-                    $ct=1;
-                    if($wylosowana==$ct)
+        
+            $wylosowana = rand(1,2);
+            if((isset($_POST['ct'])) && (!isset($_POST['tt'])))
+            {   //Obstwaione na ct
+                $wybrana = 1;            
+                    if($wybrana==$wylosowana)
                     {
-
-                             if ($rezultat = @$polaczenie->query(sprintf("SELECT * FROM 'Users' WHERE 'login=$login' AND 'value=$value'")))      
+                        //Ktos wygrał
+                        $wygrana = $_POST['obstawione'];                        
+                        $id=$_SESSION['id'];
+                        if ($rezultat = @$polaczenie->query(sprintf(" SELECT * FROM `Users` WHERE `id` = $id ")))
+                        {
+                            $ile_userow= $rezultat->num_rows;
+                            if($rezultat>0)
                             {
-                                $ile_userow= $rezultat->num_rows;
-                                if($ile_userow>0)
-                                {
-                                            echo "Udało sie ";
-                                             echo "WYGRALES";                       
-                                            $ile_wygral=$_POST['obstawione']+$_POST['obstawione'];
-                                            echo $ile_wygral;
-                                            $login=$_SESSION['login'];
-                                            $value=$_SESSION['value'];
+                                $do_zapisu = $_SESSION['value'] + $wygrana;
+                                if ($rezultat = @$polaczenie->query(sprintf("UPDATE `Users` SET `value` = $do_zapisu WHERE `Users`.`id`=$id")))
+                                { 
+                                $wyswietlana = $wygrana + $wygrana;
+                                $_SESSION['wynik'] = "Wygrałeś ".$wyswietlana." Monet";
+                                $polaczenie->close();
+                                header('Location: logout.php');
                                 }
                                 else
                                 {
-                                    echo "Zjebało sie ";
-                                    
-                                }                               
-
+                                    echo "Cos poszło nie tak";
+                                }
                             }
-                   
-                
-                else
-                {
-                    $tt=2;
-                    if($wylosowana==$tt)
-                    {
-                        echo "WYGRALES";
-                        $ile_wygral=$_POST['obstawione']+$_POST['obstawione'];
-                        echo $ile_wygral;
+                            else
+                            {
+                                echo "Coś poszło nie tak";
+                                $polaczenie->close();
+                            }
+                        }
+
                     }
-                    else
+                    else 
                     {
-                        echo "PRZEGRALES";
-                       echo $_POST['obstawione'];
+                        //Ktos przegral
+                        $wygrana = $_POST['obstawione'];                        
+                        $id=$_SESSION['id'];
+                        if ($rezultat = @$polaczenie->query(sprintf(" SELECT * FROM `Users` WHERE `id` = $id ")))
+                        {
+                            $ile_userow= $rezultat->num_rows;
+                            if($rezultat>0)
+                            {
+                                $do_zapisu = $_SESSION['value'] - $wygrana;
+                                if ($rezultat = @$polaczenie->query(sprintf("UPDATE `Users` SET `value` = $do_zapisu WHERE `Users`.`id`=$id")))
+                                {                                
+                                $_SESSION['wynik'] = "Przegrales ".$wygrana." Monet";
+                                $polaczenie->close();
+                                header('Location: logout.php');
+                                }
+                                else
+                                {
+                                    echo "Cos poszło nie tak";
+                                }
+                            }
+                            else
+                            {
+                                echo "Coś poszło nie tak";
+                                $polaczenie->close();
+                            }
+                        }
+
                     }
-                    
-                }
-                
             }
             else
             {
-                header('Location:gra.php');
+                if((!isset($_POST['ct'])) && (isset($_POST['tt'])))
+                {  
+                    //obstawione na tt                
+                    $wybrana =2;            
+                    if($wybrana==$wylosowana)
+                    {
+                        //Ktos wygrał  
+                        $wygrana = $_POST['obstawione'];
+                        
+                        $id=$_SESSION['id'];
+                        if ($rezultat = @$polaczenie->query(sprintf(" SELECT * FROM `Users` WHERE `id` = $id ")))
+                        {
+                            $ile_userow= $rezultat->num_rows;
+                            if($rezultat>0)
+                            {
+                                $do_zapisu = $_SESSION['value'] + $wygrana;
+                                if ($rezultat = @$polaczenie->query(sprintf("UPDATE `Users` SET `value` = $do_zapisu WHERE `Users`.`id`=$id")))
+                                {
+                                $wyswietlana = $wygrana + $wygrana;
+                                $_SESSION['wynik'] = "Wygrałeś ".$wyswietlana." Monet";
+                                $polaczenie->close();
+                                header('Location: logout.php');
+                                }
+                                else
+                                {
+                                    echo "Cos poszło nie tak";
+                                }
+                            }
+                            else
+                            {
+                                echo "Coś poszło nie tak";
+                                $polaczenie->close();
+                            }
+                        }
+
+                    }
+                    else 
+                    {
+                        //Ktos przegral
+                        $wygrana = $_POST['obstawione'];
+                        
+                        $id=$_SESSION['id'];
+                        if ($rezultat = @$polaczenie->query(sprintf(" SELECT * FROM `Users` WHERE `id` = $id ")))
+                        {
+                            $ile_userow= $rezultat->num_rows;
+                            if($rezultat>0)
+                            {
+                                $do_zapisu = $_SESSION['value'] - $wygrana;
+                                if ($rezultat = @$polaczenie->query(sprintf("UPDATE `Users` SET `value` = $do_zapisu WHERE `Users`.`id`=$id")))
+                                {
+                                $_SESSION['wynik'] = "Przegrales ".$wygrana." Monet";
+                                $polaczenie->close();
+                                header('Location: logout.php');
+                                }
+                                else
+                                {
+                                    echo "Cos poszło nie tak";
+                                }
+                            }
+                            else
+                            {
+                                echo "Coś poszło nie tak";
+                                $polaczenie->close();
+                            }
+                        }
+
+                    }
+                }
+                else
+                {   $polaczenie->close();
+                    $_SESSION['blaad']='<span style="color:red">Możesz zaznaczyć tylko jedną możliwość!</span>';
+                    header('Location: index.php');
+                }
+
             }
-        
+
+
+            $polaczenie->close();
+            }
+            else
+            {   $polaczenie->close();
+                $_SESSION['blaad']='<span style="color:red">Nie masz tyle pieniędzy!</span>';
+                header('Location: index.php');
+            }
+        }
+        else
+        {   $polaczenie->close();
+            $_SESSION['blaad']='<span style="color:red">Musisz coś obstawić!</span>';
+            header('Location: index.php');
+        }
     }
-                                 }
-                                 }
-}
+      
+    }
+
 
     
 ?>

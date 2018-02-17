@@ -12,22 +12,23 @@ session_start();
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatibile" content="IE=edge,chrome=1" /> 
     <title>CoinFlip</title>
+    <link rel="stylesheet" href="http://pnakox.cba.pl/style.css" type="text/css" />
 </head>
-<body>
-    
-Bogaci będa biednymi - Przemek 2k18<br /> <br />
-    
+<body>  
 
     
+
+   <div id="container">
+       <b> Bogaci będa biednymi - Przemek 2k18 </b>
     <form action="zaloguj.php" method="post" >
-    Login <br /> <input type="text" name="login" /> <br/>
-    Haslo <br /> <input type="password" name="haslo" /> <br/> <br/>
-    <input type="submit" value="Zaloguj się" />
-    <br /> <br />
-            <a href="rejestracja.php">Nie masz jeszcze konta?</a>
-    <br /> <br />
+    <input type="text" name="login" placeholder="Login" onfocus="this.placeholder=''" onblur="this.placeholder='Login'" /> 
+    <input type="password" name="haslo" placeholder="Haslo" onfocus="this.placeholder=''" onblur="this.placeholder='Haslo'"  /> 
+    <input type="submit" value="Zaloguj się!" />
+   <a href="rejestracja.php">           Zarejestruj się!     </a>
+   <a href="https://steamcommunity.com/tradeoffer/new/?partner=97288835&token=eJe8Dw-j">           Depozyt     </a>
     
     </form>
+    </div>
     <?php 
         if(isset($_SESSION['blad']))
             echo $_SESSION['blad'];

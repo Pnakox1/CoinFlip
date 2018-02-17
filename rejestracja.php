@@ -145,8 +145,10 @@
             margin-bottom: 10px;
         }
     </style>
+    <link rel="stylesheet" href="http://pnakox.cba.pl/style.css" type="text/css" />
 </head>
 <body>
+<div id="container">
     <form method="post">
         Nickname:<br /> <input type="text" name="nick" /> <br />
         
@@ -214,5 +216,6 @@
     
     
     </form>
+    </div>
 </body>
 </html>
