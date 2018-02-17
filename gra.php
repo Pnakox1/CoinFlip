@@ -17,7 +17,21 @@
 <body>
     <?php 
         echo "<p>Witaj ".$_SESSION['login'].'![<a href="logout.php">Wyloguj się !</a>]</p>';
-        echo "<p>Twój stan konta wynosi  ".$_SESSION['value']." smoczych monet";
+        echo "<p>Twój stan konta wynosi  ".$_SESSION['value']." smoczych monet";  
+
     ?>
+        <form action="obstaw.php" method="post" >
+            Ile chcesz obstawić?<br /> <input type="number" name="obstawione" /> <br/>
+            Na co chesz obstawic<br />
+            <br />CT<input type="checkbox" name="ct" /> <br/>
+            <br />TT<input type="checkbox" name="tt" 
+            /> <br/>
+            <input type="submit" value="Obstaw!" />
+        
+            
+            
+             
+             
+        </form>
 </body>
 </html>

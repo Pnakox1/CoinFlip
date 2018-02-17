@@ -1,6 +1,6 @@
 <?php 
 session_start();
-   if ((isset($_SESSION['udanarejestracja']))) 
+   if ((!isset($_SESSION['udanarejestracja']))) 
 	{
 		header('Location: index.php');
 		exit();
